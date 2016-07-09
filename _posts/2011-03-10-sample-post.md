@@ -10,15 +10,9 @@ image:
   creditlink: http://www.dargadgetz.com/ios-7-abstract-wallpaper-pack-for-iphone-5-and-ipod-touch-retina/
 ---
 
-只是什么.
-
-
 ### Java中关于字符串的构建、连接、查找问题
 
 1、字符串的构建有哪些方法呢，下面将提供几种字符串的构建方法：
-
-![Smithsonian Image]({{ site.url }}/images/3953273590_704e3899d5_m.jpg)
-{: .image-right}
 
   1、String str=“abc” 2、String str=new String(“abc”);
   3、StringBuffer bf=new StringBuffer(“abc”);
