@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Sample Post
+title: 关于字符串构建，连接，查找
 description: "Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more."
-modified: 2014-12-24
+modified: 2016-07-09
 tags: [sample post]
 image:
   feature: abstract-3.jpg
@@ -10,92 +10,65 @@ image:
   creditlink: http://www.dargadgetz.com/ios-7-abstract-wallpaper-pack-for-iphone-5-and-ipod-touch-retina/
 ---
 
-Below is just about everything you'll need to style in the theme. Check the source code to see the many embedded elements within paragraphs.
+只是什么.
 
-# Heading 1
 
-## Heading 2
+### Java中关于字符串的构建、连接、查找问题
 
-### Heading 3
-
-#### Heading 4
-
-##### Heading 5
-
-###### Heading 6
-
-### Body text
-
-Lorem ipsum dolor sit amet, test link adipiscing elit. **This is strong**. Nullam dignissim convallis est. Quisque aliquam.
+1、字符串的构建有哪些方法呢，下面将提供几种字符串的构建方法：
 
 ![Smithsonian Image]({{ site.url }}/images/3953273590_704e3899d5_m.jpg)
 {: .image-right}
 
-*This is emphasized*. Donec faucibus. Nunc iaculis suscipit dui. 53 = 125. Water is H<sub>2</sub>O. Nam sit amet sem. Aliquam libero nisi, imperdiet at, tincidunt nec, gravida vehicula, nisl. The New York Times <cite>(That’s a citation)</cite>. <u>Underline</u>. Maecenas ornare tortor. Donec sed tellus eget sapien fringilla nonummy. Mauris a ante. Suspendisse quam sem, consequat at, commodo vitae, feugiat in, nunc. Morbi imperdiet augue quis tellus.
+  1、String str=“abc” 2、String str=new String(“abc”);
+  3、StringBuffer bf=new StringBuffer(“abc”);
+  Buf=bf.toString;
+  4、StringBuilder bu=new StringBuilder(“abc”);
+     Bu=bu.toString;
 
-HTML and <abbr title="cascading stylesheets">CSS<abbr> are our tools. Mauris a ante. Suspendisse quam sem, consequat at, commodo vitae, feugiat in, nunc. Morbi imperdiet augue quis tellus. Praesent mattis, massa quis luctus fermentum, turpis mi volutpat justo, eu volutpat enim diam eget metus.
+2、关于字符串的连接方式又有哪些呢？什么样的方法才更加高效？
+首先先分析一下我们最常用的字符串连接方法:
+   1、String str=“abc”; str+=“def”;
+使用“+”符号进行连接，java中已经将这个符号重载好给我们使用，所以我们一般经常使用这个方法连接字符串。这个方法是很方便的，但是从效率方面来探讨一下这个方法又会如何呢？这里在提供一种方法作为比较. 使用String中的concat()方法连接字符串  
+2、str1.concat("abc");
+这两个方法都可以连接字符串，那个效率更高呢?我们来看一下
 
-### Blockquotes
+在一百次连接时，时间相差不大。
 
-> Lorem ipsum dolor sit amet, test link adipiscing elit. Nullam dignissim convallis est. Quisque aliquam.
+在连接次数达到10万次的时候，效率相差就非常明显了。
+现在再来探讨一下这两种连接方法的实现方法，先来说第一种，使用符号“+”连接。当我们使用这个方法是就会写到一下代码，
+String a=“abc”；string b=“def”； a+=b;
+这里开辟了多少个对象呢？不要觉得只有两个对象，其实这里开辟了三个对象，也就开辟了三个内存区域。
+a内存区       b内存区                c内存区
+		
+			
+						
+     连接的方式为将a、b内存区的数据一份一份的复制到c内存区。所以这种方法就是不断开辟内存来储存新连接成的字符串，时间复杂度为：Nx
+第二种方法呢，是怎样的呢，使用String类的concat方法通常需要这样写： 
+       String a=“abc”；string b=“def”；a=a.concat(b);
+这里只开辟了两个对象，也就是开辟了两个内存，
+                a内存区       b内存区            
+			
+		
 
-## List Types
+这里只需要将a内存区的尾部指向b内存区的头部就可以实现两个字符串的连接，所以时间复杂度为：N  是个常数级的复杂度。所以这两种方法的效率孰高孰低就简单明了了。
+下面在介绍两个不常见的字符串连接方法：
+1、使用StringBuffer类
+2、使用StringBuilder类
+使用这两个类的字符串连接也是非常高效的，
+使用StringBuffer时可以这样写，
+        StringBuffer bf=new StringBuffer("abc");
+        bf.append("abc");
+        String stringbf=bf.toString();
+使用StringBuilder时类似的写法：
+        StringBuilder bu=new StringBuilder("abc");
+        bu.append("abc");
+        String stringbf=bu.toString();
+StringBuffer和StringBuilder的功能基本一样，只是StringBuffer是线程安全的，而StringBuilder不是线程安全的。因此，StringBuilder的效率会更高。关于原理这里不过多介绍。
 
-### Ordered Lists
-
-1. Item one
-   1. sub item one
-   2. sub item two
-   3. sub item three
-2. Item two
-
-### Unordered Lists
-
-* Item one
-* Item two
-* Item three
-
-## Tables
-
-| Header1 | Header2 | Header3 |
-|:--------|:-------:|--------:|
-| cell1   | cell2   | cell3   |
-| cell4   | cell5   | cell6   |
-|----
-| cell1   | cell2   | cell3   |
-| cell4   | cell5   | cell6   |
-|=====
-| Foot1   | Foot2   | Foot3
-{: rules="groups"}
-
-## Code Snippets
-
-Syntax highlighting via Rouge
-
-```css
-#container {
-  float: left;
-  margin: 0 -240px 0 0;
-  width: 100%;
-}
-```
-
-Non Pygments code example
-
-    <div id="awesome">
-        <p>This is great isn't it?</p>
-    </div>
-
-## Buttons
-
-Make any link standout more when applying the `.btn` class.
-
-```html
-<a href="#" class="btn btn-success">Success Button</a>
-```
-
-<div markdown="0"><a href="#" class="btn">Primary Button</a></div>
-<div markdown="0"><a href="#" class="btn btn-success">Success Button</a></div>
-<div markdown="0"><a href="#" class="btn btn-warning">Warning Button</a></div>
-<div markdown="0"><a href="#" class="btn btn-danger">Danger Button</a></div>
-<div markdown="0"><a href="#" class="btn btn-info">Info Button</a></div>
+关于字符串查找问题，话句话说就是在a字符串中判断出是否有b字符串的问题。在java中封装有几个方法供用户使用：
+  1、int indexOf(String str) ：返回第一次出现的指定子字符串在此字符串中的位置整数(第一个位置为0)。 
+  2、int indexOf(String str, int startIndex)：从指定的索引处开始，返回第一次出现的指定子字符串在此字符串中的位置整数(第一个位置为0)。 
+  3、int lastIndexOf(String str) ：返回在此字符串中最右边出现的指定子字符串的位置整数(第一个位置为0)。 
+  4、int lastIndexOf(String str, int startIndex) ：从指定的索引处开始向后搜索，返回在此字符串中最后一次出现的指定子字符串的位置整数(第一个位置为0)。
+关于更高效的字符串查找算法可以参考一下博客：http://www.nowamagic.net/algorithm/algorithm_KmpFastStringSearch.php
