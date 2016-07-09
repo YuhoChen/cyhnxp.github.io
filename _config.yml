@@ -1,9 +1,9 @@
-title:            CYH BLOGS
+title:            YuHao Chen's Blogs
+tagline: 没有事情是人类无法做到的
 description:      Describe your website here.
 disqus_shortname: 
 reading_time:     true
 words_per_minute: 200
-exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 # Your site's domain goes here (eg: https://mmistakes.github.io, http://yourdomain.com, etc)
 # When testing locally leave blank or use http://localhost:4000
 url:
@@ -50,7 +50,7 @@ sass:
 
 # https://github.com/mojombo/jekyll/wiki/Permalinks
 permalink:   /:categories/:title/
-
+exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 # Amount of post to show on home page
 paginate: 5
 
